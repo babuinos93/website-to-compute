@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HSL Simulaattori</title>
+  <style>
+    body { font-family: sans-serif; background: #f5f5f5; padding: 20px; }
+    .container { max-width: 400px; margin: auto; background: white; padding: 20px; border-radius: 10px; }
+    .btn { width: 100%; padding: 15px; background: #007ac9; color: white; border: none; border-radius: 5px; font-size: 16px; }
+    #ticketScreen { display: none; margin-top: 20px; }
+    #countdown { font-weight: bold; font-size: 24px; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>HSL Simulaattori</h2>
+    <button class="btn" onclick="buyTicket()">Osta lippu</button>
+
+    <div id="ticketScreen">
+      <h3>Matkalippu – A alue</h3>
+      <p>Voimassa:</p>
+      <div id="countdown">80:00</div>
+      <p><strong>QR-koodi (feikki)</strong></p>
+      <div style="font-size: 30px; border: 1px dashed #999; padding: 20px;">▣▢▣▣▢▢▣</div>
+    </div>
+  </div>
+
+  <script>
+    let timer;
+    function buyTicket() {
+      document.getElementById('ticketScreen').style.display = 'block';
+      let duration = 80 * 60;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        if (duration <= 0) {
+          clearInterval(timer);
+          document.getElementById('countdown').innerText = "Lippu vanhentunut";
+          return;
+        }
+        const minutes = Math.floor(duration / 60);
+        const seconds = duration % 60;
+        document.getElementById('countdown').innerText =
+          `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        duration--;
+      }, 1000);
+    }
+  </script>
+</body>
+</html>
